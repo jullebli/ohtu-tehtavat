@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import static org.junit.Assert.*;
 import ohtu.io.*;
@@ -53,19 +54,19 @@ public class Stepdefs {
         inputLines.add("new");
     }
 
-    @When("username {string} and password {string} are given")
-    public void usernameAndPasswordAreValid(String username, String password) {
-        inputLines.add(username);
-        inputLines.add(password);
-
-        io = new StubIO(inputLines);
+    @Given ("user {string} with password {string} is created")
+    public void userIsCreated(String username, String password) {
+        io = new StubIO(Arrays.asList("new", "eero", "salainen1"));
         app = new App(io, auth);
         app.run();
     }
-
 }
 
 /*
-    
+    // UserDao dao = new InMemoryUserDao();  
+    // StubIO io = new StubIO(Arrays.asList("new", "eero", "sala1nen"));   
+    //  AuthenticationService auth = new AuthenticationService(dao);
+    // new App(io, auth).run();
+    // System.out.println(io.getPrints());
 
  */

@@ -39,27 +39,29 @@ public class AuthenticationService {
     }
 
     private boolean invalid(String username, String password) {
+        boolean invalid = true;
         if (userDao.findByName(username) != null) {
-            return true;
+            return invalid;
         }
         if (username.length() < 3) {
-            return true;
+            return invalid;
         }
-        
+
         if (password.length() < 8) {
-            return true;
+            return invalid;
         }
         for (char c : username.toCharArray()) {
             if (c < 'a' && c > 'z') {
-                return true;
+                return invalid;
             }
         }
-        
+
         for (char c : password.toCharArray()) {
             if (!Character.isAlphabetic(c)) {
-                return false;
+                System.out.println("!Character.isAlphabetic(" + c + ")");
+                invalid = false;
             }
-        }        
-        return false;
+        }
+        return invalid;
     }
 }
