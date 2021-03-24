@@ -18,6 +18,7 @@ public class Main {
     static AuthenticationService authService;
     
     public static void main(String[] args) {
+        System.out.println("ALKU");
         port(findOutPort());
               
         get("/", (request, response) -> {
@@ -81,7 +82,9 @@ public class Main {
                 
            response.redirect("/welcome");
            return new ModelAndView(model, LAYOUT);
-        }, new VelocityTemplateEngine());           
+        }, new VelocityTemplateEngine());   
+
+        System.out.println("LOPPU");        
     }
 
     public static void setDao(UserDao dao) {
