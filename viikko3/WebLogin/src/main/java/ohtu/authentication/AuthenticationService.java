@@ -55,7 +55,7 @@ public class AuthenticationService {
             }
         }
         if (notAlphabets == 0) {
-            status.addError("password should have at least 8 characters");
+            status.addError("password has to contain at least one charaster that is not a letter");
         }
 
         if (status.isOk()) {

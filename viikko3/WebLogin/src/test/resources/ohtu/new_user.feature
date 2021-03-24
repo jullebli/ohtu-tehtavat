@@ -18,4 +18,4 @@ Feature: A new user account can be created if a proper unused username and passw
     Scenario: creation fails when password and password confirmation do not match
         Given command new user is selected
         When  a valid username "Maija" and valid password "testing1" and incorrect conformation "testaus1" are entered
-        Then  user is not created and error for incompatible password and password confirmation is reported
+        Then  user is not created and error for incompatible password and password confirmation is reported  
