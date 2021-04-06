@@ -16,6 +16,12 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-beans', version: springVersion
 }
 
+dependencies {
+    compile 'com.google.guava:guava:23.0'
+    testCompile 'org.mockito:mockito-core:3.1.0'
+    testCompile 'junit:junit:4.12'
+}
+
 application {
     mainClass = 'ohtu.Main'
 }
