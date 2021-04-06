@@ -5,10 +5,10 @@ import org.junit.Before;
 import static org.mockito.Mockito.*;
 
 public class KauppaTest {
-    
+
     Pankki pankki;
     Varasto varasto;
-    
+
     @Before
     public void setUp() {
         pankki = mock(Pankki.class);
@@ -20,7 +20,7 @@ public class KauppaTest {
         when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "leipä", 7));
         when(varasto.saldo(3)).thenReturn(0);
         when(varasto.haeTuote(3)).thenReturn(new Tuote(3, "kahvipaketti", 10));
-        
+
     }
 
     @Test
@@ -55,7 +55,7 @@ public class KauppaTest {
 
         Viitegeneraattori viite = mock(Viitegeneraattori.class);
         when(viite.uusi()).thenReturn(10);
-        
+
         Kauppa k = new Kauppa(varasto, pankki, viite);
 
         k.aloitaAsiointi();
@@ -105,5 +105,63 @@ public class KauppaTest {
         k.lisaaKoriin(3);
         k.tilimaksu("maija", "67890");
         verify(pankki).tilisiirto("maija", 7, "67890", "33333-44455", 5);
+    }
+
+    @Test
+    public void aloitaAsiointiNollaaOstoksenTiedot() {
+
+        Viitegeneraattori viite = mock(Viitegeneraattori.class);
+        when(viite.uusi()).thenReturn(11);
+
+        Kauppa k = new Kauppa(varasto, pankki, viite);
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+        k.lisaaKoriin(2);
+        k.aloitaAsiointi();
+        k.lisaaKoriin(2);
+        k.tilimaksu("maija", "67890");
+
+        verify(pankki).tilisiirto("maija", 11, "67890", "33333-44455", 7);
+    }
+
+    @Test
+    public void pyydetaanUusiViitenumeroJokaiselleMaksutapahtumalle() {
+
+        Viitegeneraattori viite = mock(Viitegeneraattori.class);
+        when(viite.uusi()).thenReturn(11);
+
+        Kauppa k = new Kauppa(varasto, pankki, viite);
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+        k.tilimaksu("maija", "67890");
+        verify(viite, times(1)).uusi();
+
+        k.lisaaKoriin(2);
+        k.lisaaKoriin(1);
+        k.tilimaksu("maija", "67890");
+        verify(viite, times(2)).uusi();
+
+        k.lisaaKoriin(2);
+        k.tilimaksu("maija", "67890");
+
+        verify(viite, times(3)).uusi();
+    }
+
+    @Test
+    public void poistaKoristaKutsuuVarastonMetodiaPalautaVarastoonJaTilisiirtoTapahtuuOikeillaParametreilla() {
+
+        Viitegeneraattori viite = mock(Viitegeneraattori.class);
+        when(viite.uusi()).thenReturn(19);
+
+        Kauppa k = new Kauppa(varasto, pankki, viite);
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+        k.lisaaKoriin(2);
+        k.poistaKorista(1);
+        k.tilimaksu("maija", "67890");
+        
+        Tuote maito = varasto.haeTuote(1);
+        verify(varasto, times(1)).palautaVarastoon(maito);
+        verify(pankki).tilisiirto("maija", 19, "67890", "33333-44455", 7);
     }
 }
