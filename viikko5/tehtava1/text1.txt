@@ -1,3 +1,5 @@
-Lisätään tiedosto 1.commitissa
+Lisätään tiedosto 1. commitissa
 
-Lisätään lisää tekstiä 2.commitissa
+Lisätään lisää tekstiä 2. commitissa
+
+Ja vielä kolmas muutos 3. committiin.
