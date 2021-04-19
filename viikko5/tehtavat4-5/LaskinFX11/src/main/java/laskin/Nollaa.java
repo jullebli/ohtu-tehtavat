@@ -11,12 +11,14 @@ public class Nollaa extends Komento {
 
     @Override
     public void suorita() {
+        edellinenTulos = tuloskentta.getText();
         sovellus.nollaa();
         tuloskentta.setText(String.valueOf(sovellus.tulos()));
     }
 
     @Override
     public void peru() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        sovellus.setTulos(Integer.valueOf(edellinenTulos));
+        tuloskentta.setText(edellinenTulos);
     }
 }

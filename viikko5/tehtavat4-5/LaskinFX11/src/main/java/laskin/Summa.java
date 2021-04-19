@@ -15,6 +15,7 @@ public class Summa extends Komento {
         if (syotekentta.getText().equals("")) {
             return;
         } else {
+            edellinenTulos = tuloskentta.getText();
             sovellus.plus(Integer.valueOf(syotekentta.getText()));
             tuloskentta.setText(String.valueOf(sovellus.tulos()));
             syotekentta.setText("");
@@ -23,6 +24,7 @@ public class Summa extends Komento {
 
     @Override
     public void peru() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        sovellus.setTulos(Integer.valueOf(edellinenTulos));
+        tuloskentta.setText(edellinenTulos);
     }
 }
